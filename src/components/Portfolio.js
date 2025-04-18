@@ -107,9 +107,14 @@ const Portfolio = () => {
         Our Portfolio
       </Heading>
 
+      {/* Responsive Grid */}
       <Grid
-        templateColumns="repeat(2, 1fr)"
-        gap={12}
+        templateColumns={{
+          base: "repeat(1, 1fr)", // 1 card on small screens
+          sm: "repeat(2, 1fr)", // 2 cards on small screens
+          md: "repeat(3, 1fr)", // 3 cards on medium screens
+        }}
+        gap={6} // Adjusted gap between cards
         px={4}
         maxWidth="1200px"
         mx="auto"
@@ -137,7 +142,7 @@ const Portfolio = () => {
                 objectFit="cover"
                 height="300px" // Set fixed height to keep card layout intact
                 width="100%"
-                opacity="0.5" // Reduce image opacity for better text contrast
+                opacity="0.7" // Slightly higher opacity for better text visibility
               />
               <Box
                 position="absolute"
@@ -151,13 +156,33 @@ const Portfolio = () => {
                 bg="rgba(0, 0, 0, 0.6)" // Add a semi-transparent black background
                 borderRadius="lg" // Optional: Add rounded corners to the background
               >
-                <Heading size="lg" mb={4}>
+                <Heading
+                  size="md"
+                  mb={4}
+                  fontSize={{ base: "lg", md: "xl" }} // Make title responsive
+                >
                   {project.title}
                 </Heading>
-                <Text mb={4}>{project.description}</Text>
-                <Box mb={4}>
+                <Text
+                  mb={4}
+                  fontSize={{ base: "sm", md: "md" }} // Make description font size responsive
+                >
+                  {project.description}
+                </Text>
+                <Box
+                  mb={4}
+                  display="flex"
+                  flexWrap="wrap"
+                  justifyContent="center"
+                >
                   {project.technologies.map((tech, i) => (
-                    <Badge key={i} colorScheme="teal" mr={2}>
+                    <Badge
+                      key={i}
+                      colorScheme="teal"
+                      mr={2}
+                      mb={2}
+                      fontSize={{ base: "xs", sm: "sm" }} // Adjust badge font size for mobile
+                    >
                       {tech}
                     </Badge>
                   ))}
@@ -168,6 +193,7 @@ const Portfolio = () => {
                   color="brand.aqua"
                   fontWeight="bold"
                   _hover={{ textDecoration: "underline" }}
+                  fontSize={{ base: "sm", md: "md" }} // Responsive font size for "Click to View"
                 >
                   Click to View
                 </Text>

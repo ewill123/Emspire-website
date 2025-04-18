@@ -283,7 +283,7 @@ const Contact = () => {
                           icon={social.icon}
                           bg={social.bg}
                           borderRadius="full"
-                          size="lg"
+                          size={{ base: "lg", sm: "xl" }} // Adjust size for responsiveness
                           _hover={{ bg: social.hover }}
                           aria-label="Social Icon"
                         />
@@ -322,8 +322,9 @@ const Contact = () => {
                       src="QR.png"
                       alt="QR Code"
                       style={{
-                        width: "256px",
-                        height: "256px",
+                        width: "100%",
+                        maxWidth: "256px",
+                        height: "auto",
                         borderRadius: "8px",
                       }}
                     />
