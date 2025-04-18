@@ -89,7 +89,13 @@ const Navbar = ({ onGetStartedClick }) => {
       zIndex="10"
       overflowX="hidden" // Prevent any horizontal overflow
     >
-      <Flex align="center" justify="space-between" wrap="wrap">
+      <Flex
+        align="center"
+        justify="space-between"
+        wrap="wrap"
+        maxW="1200px"
+        mx="auto"
+      >
         {/* Logo - Breathing and clickable */}
         <Box onClick={scrollToGetStarted} ml={4}>
           <img
@@ -173,11 +179,11 @@ const Navbar = ({ onGetStartedClick }) => {
           variant="unstyled"
           color="white"
           aria-label="Open menu"
-          display={{ base: "block", md: "none" }}
-          position="absolute" // Added position absolute to fix the issue
-          top="1rem"
-          right="1rem"
-          zIndex="20" // Ensures it's above other content
+          display={{ base: "block", md: "none" }} // Ensures it's only visible on mobile
+          position="fixed" // Change from "absolute" to "fixed" for consistent positioning
+          top="1rem" // Adjust position from top if needed
+          right="1rem" // Keep the right position fixed
+          zIndex="999" // Ensure it is above other content on mobile
         />
       </Flex>
 

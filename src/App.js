@@ -5,7 +5,6 @@ import {
   faFacebook,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
-import Lottie from "react-lottie";
 import {
   Box,
   Button,
@@ -32,14 +31,7 @@ import Navbar from "./components/Navbar";
 import Services from "./components/Services";
 import Portfolio from "./components/Portfolio";
 import Contact from "./components/Contact";
-import Cursor from "./components/Cursor";
 import emailjs from "emailjs-com"; // Import Email.js
-
-// Lottie animation imports
-import animationData from "./assets/lottie/Animation - 1744592426733.json";
-import animationData2 from "./assets/lottie/Animation - 1744592426733.json";
-import animationData3 from "./assets/lottie/Animation - 1744592426733.json";
-import animationData4 from "./assets/lottie/lottie.json";
 
 function App() {
   const [loading, setLoading] = useState(true); // State for splash screen
@@ -60,44 +52,6 @@ function App() {
     md: "5xl",
     lg: "6xl",
   });
-
-  const [positions, setPositions] = useState([
-    { top: 0, left: 0, interval: 5000 },
-    { top: 0, left: 0, interval: 7000 },
-    { top: 0, left: 0, interval: 9000 },
-    { top: 0, left: 0, interval: 11000 },
-  ]);
-
-  const lottieAnimations = [
-    animationData,
-    animationData2,
-    animationData3,
-    animationData4,
-  ];
-
-  // Move Lotties at different intervals
-  useEffect(() => {
-    const moveLotties = () => {
-      setPositions((prevPositions) =>
-        prevPositions.map((pos) => ({
-          ...pos,
-          top: Math.floor(Math.random() * window.innerHeight),
-          left: Math.floor(Math.random() * window.innerWidth),
-        }))
-      );
-    };
-
-    const intervals = positions.map(
-      (pos, index) =>
-        setInterval(() => {
-          moveLotties();
-        }, pos.interval + index * 2000) // Stagger movement by an additional 2 seconds per animation
-    );
-
-    return () => {
-      intervals.forEach((interval) => clearInterval(interval));
-    };
-  }, [positions]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -226,43 +180,8 @@ function App() {
     }
   };
 
-  const lottieOptions = (animationData, className) => ({
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-      className: className,
-    },
-  });
-
   return (
     <Box position="relative" minHeight="100vh" bg="brand.dark" color="white">
-      <Cursor />
-
-      {/* Floating Lottie animations across the entire app */}
-      {positions.map((position, index) => (
-        <Box
-          key={index} // Use the index as the key
-          position="absolute"
-          top={`${position.top}px`}
-          left={`${position.left}px`}
-          width="150px"
-          zIndex="2" // Ensure Lottie is above the content
-          pointerEvents="none"
-          transition="all 2s ease-in-out"
-        >
-          <Lottie
-            options={lottieOptions(
-              lottieAnimations[index],
-              `lottie-anim${index + 1}`
-            )}
-            height="150px"
-            width="150px"
-          />
-        </Box>
-      ))}
-
       <AnimatePresence mode="wait">
         <motion.div
           key="main"
@@ -300,25 +219,12 @@ function App() {
               width="100%"
               height="100%"
               objectFit="cover"
-              zIndex="-2" // Ensure video is behind Lottie
+              zIndex="-2" // Ensure video is behind content
               filter="brightness(0.6)"
             >
               <source src="/background.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </Box>
-
-            {/* 🔥 Lottie blurred glow effect */}
-            <Box
-              position="absolute"
-              top="0"
-              left="0"
-              width="100%"
-              height="100%"
-              bgGradient="linear(to-r, brand.deep, brand.teal, brand.aqua)"
-              opacity="0.3"
-              filter="blur(90px)"
-              zIndex="-1"
-            />
 
             <VStack textAlign="center" spacing={6} maxWidth="900px">
               <Heading
@@ -398,206 +304,82 @@ function App() {
       >
         <Text fontSize="sm">&copy; {new Date().getFullYear()} Emspire</Text>
         <Box mt="2">
-          <Button
-            variant="link"
-            color="white"
-            href="https://twitter.com"
-            target="_blank"
-          >
-            <FontAwesomeIcon icon={faTwitter} size="lg" />
-          </Button>
-          <Button
-            variant="link"
-            color="white"
-            href="https://facebook.com"
-            target="_blank"
-          >
-            <FontAwesomeIcon icon={faFacebook} size="lg" />
-          </Button>
-          <Button
-            variant="link"
-            color="white"
-            href="https://linkedin.com"
-            target="_blank"
-          >
-            <FontAwesomeIcon icon={faLinkedin} size="lg" />
-          </Button>
-        </Box>
-
-        {/* Social Media Links */}
-        <Box display="flex" justifyContent="center" gap="4" mb="4">
-          <Button
-            variant="link"
-            color="white"
-            href="https://twitter.com"
-            target="_blank"
-            fontSize="xl"
-            _hover={{ color: "brand.aqua" }}
-          >
-            <i className="fab fa-twitter"></i>
-          </Button>
-          <Button
-            variant="link"
-            color="white"
-            href="https://facebook.com"
-            target="_blank"
-            fontSize="xl"
-            _hover={{ color: "brand.aqua" }}
-          >
-            <i className="fab fa-facebook"></i>
-          </Button>
-          <Button
-            variant="link"
-            color="white"
-            href="https://linkedin.com"
-            target="_blank"
-            fontSize="xl"
-            _hover={{ color: "brand.aqua" }}
-          >
-            <i className="fab fa-linkedin"></i>
-          </Button>
-          <Button
-            variant="link"
-            color="white"
-            href="https://instagram.com"
-            target="_blank"
-            fontSize="xl"
-            _hover={{ color: "brand.aqua" }}
-          >
-            <i className="fab fa-instagram"></i>
-          </Button>
-        </Box>
-
-        {/* Footer Navigation */}
-        <Box display="flex" justifyContent="center" gap="8" mb="4">
-          <Button
-            variant="link"
-            color="white"
-            fontSize="sm"
-            _hover={{ color: "brand.aqua" }}
-          >
-            Privacy Policy
-          </Button>
-          <Button
-            variant="link"
-            color="white"
-            fontSize="sm"
-            _hover={{ color: "brand.aqua" }}
-          >
-            Terms of Service
-          </Button>
-          <Button
-            variant="link"
-            color="white"
-            fontSize="sm"
-            _hover={{ color: "brand.aqua" }}
-          >
-            FAQ
-          </Button>
-        </Box>
-
-        {/* Contact Info */}
-        <Box mb="4">
-          <Text fontSize="sm" fontWeight="medium">
-            Contact Us:{" "}
-            <a href="mailto:info@emspire.com" style={{ color: "white" }}></a>
-          </Text>
+          <FontAwesomeIcon icon={faTwitter} size="lg" />
+          <FontAwesomeIcon icon={faFacebook} size="lg" ml="4" />
+          <FontAwesomeIcon icon={faLinkedin} size="lg" ml="4" />
         </Box>
       </Box>
 
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        size="lg"
-        closeOnOverlayClick={false}
-        motionPreset="none"
-      >
+      {/* Contact Modal */}
+      <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: 20 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-        >
-          <ModalContent
-            bg="white"
-            color="black"
-            p="6"
-            borderRadius="8px"
-            boxShadow="lg"
-          >
-            <ModalHeader>Get In Touch</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <form onSubmit={handleSubmit}>
-                <VStack spacing="4">
-                  <FormControl isRequired>
-                    <FormLabel>Your Name</FormLabel>
-                    <Input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      placeholder="Enter your full name"
-                      backgroundColor="white"
-                    />
-                  </FormControl>
+        <ModalContent>
+          <ModalHeader>Contact Us</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <form onSubmit={handleSubmit}>
+              <FormControl isRequired>
+                <FormLabel>Your Name</FormLabel>
+                <Input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  placeholder="Enter your name"
+                  backgroundColor="white"
+                />
+              </FormControl>
+              <FormControl isRequired mt={4}>
+                <FormLabel>Email Address</FormLabel>
+                <Input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="Enter your email"
+                  backgroundColor="white"
+                />
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Phone Number (optional)</FormLabel>
+                <Input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="Enter your phone number"
+                  backgroundColor="white"
+                />
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Services Needed</FormLabel>
+                <Select
+                  name="services"
+                  value={formData.services}
+                  onChange={handleServiceChange}
+                  backgroundColor="white"
+                >
+                  <option value="">Select a service</option>
+                  <option value="businessCard">Business Card</option>
+                  <option value="websiteDesign">Website Design</option>
+                  <option value="branding">Branding</option>
+                </Select>
+              </FormControl>
 
-                  <FormControl isRequired>
-                    <FormLabel>Your Email</FormLabel>
-                    <Input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      placeholder="Enter your email address"
-                      backgroundColor="white"
-                    />
-                  </FormControl>
+              {getFormFields()}
 
-                  <FormControl>
-                    <FormLabel>Your Phone Number (optional)</FormLabel>
-                    <Input
-                      type="text"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      placeholder="Enter your phone number"
-                      backgroundColor="white"
-                    />
-                  </FormControl>
-
-                  <FormControl isRequired>
-                    <FormLabel>Select Your Service</FormLabel>
-                    <Select
-                      name="services"
-                      value={formData.services}
-                      onChange={handleServiceChange}
-                      placeholder="Select a service"
-                      backgroundColor="white"
-                    >
-                      <option value="businessCard">Business Card Design</option>
-                      <option value="websiteDesign">Website Design</option>
-                      <option value="branding">Branding</option>
-                    </Select>
-                  </FormControl>
-
-                  {getFormFields()}
-
-                  <Button
-                    type="submit"
-                    colorScheme="teal"
-                    size="lg"
-                    width="full"
-                    mt="4"
-                  >
-                    Submit Request
-                  </Button>
-                </VStack>
-              </form>
-            </ModalBody>
-          </ModalContent>
-        </motion.div>
+              <Button
+                type="submit"
+                mt={6}
+                colorScheme="teal"
+                size="lg"
+                width="full"
+              >
+                Send Message
+              </Button>
+            </form>
+          </ModalBody>
+        </ModalContent>
       </Modal>
     </Box>
   );
