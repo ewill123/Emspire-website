@@ -15,7 +15,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { motion } from "framer-motion"; // Importing framer-motion for animations
+import { motion } from "framer-motion";
 
 // Reusable styles for nav links
 const navLinkStyles = () => ({
@@ -87,8 +87,9 @@ const Navbar = ({ onGetStartedClick }) => {
       position="fixed"
       top="0"
       zIndex="10"
+      overflowX="hidden" // Prevent any horizontal overflow
     >
-      <Flex align="center" justify="space-between">
+      <Flex align="center" justify="space-between" wrap="wrap">
         {/* Logo - Breathing and clickable */}
         <Box onClick={scrollToGetStarted} ml={4}>
           <img
@@ -103,12 +104,13 @@ const Navbar = ({ onGetStartedClick }) => {
           />
         </Box>
 
-        {/* Desktop Nav Links */}
+        {/* Desktop and Tablet Nav Links */}
         <HStack
           spacing={8}
           display={{ base: "none", md: "flex" }}
           justify="center"
           w="100%"
+          wrap="wrap"
         >
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -172,6 +174,10 @@ const Navbar = ({ onGetStartedClick }) => {
           color="white"
           aria-label="Open menu"
           display={{ base: "block", md: "none" }}
+          position="absolute" // Added position absolute to fix the issue
+          top="1rem"
+          right="1rem"
+          zIndex="20" // Ensures it's above other content
         />
       </Flex>
 

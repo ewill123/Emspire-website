@@ -147,7 +147,7 @@ const Contact = () => {
             padding="8"
             transition="all 0.3s ease-in-out"
             _hover={{ boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)" }}
-            width="600px"
+            width={{ base: "90%", sm: "80%", md: "600px" }} // Responsive width
             height="auto"
           >
             <motion.div
