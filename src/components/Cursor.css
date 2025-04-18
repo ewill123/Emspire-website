@@ -1,0 +1,96 @@
+/* Remove default cursor */
+body {
+  cursor: none;
+}
+
+/* Cursor Container - Full-screen container to house the custom cursor */
+.cursor-container {
+  position: fixed;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+/* Main Cursor Dot */
+.cursor {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #ffca0b; /* Golden color */
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background-color 0.3s ease,
+    transform 0.1s ease-out;
+  z-index: 9999;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Cursor Outer Ring (Outline Effect) */
+.cursor-ring {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 202, 11, 0.7); /* Outline effect with a golden color */
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  opacity: 0; /* Initially hidden */
+  z-index: -1;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Hover Effect - When hovering over buttons or links */
+button:hover,
+a:hover,
+.interactive:hover {
+  cursor: none !important;
+  transform: scale(0.1);
+}
+
+/* Increase Cursor Size and Show Ring on Hover */
+.cursor-hover {
+  width: 25px;
+  height: 25px;
+  background-color: #e8b500; /* Darker golden color */
+}
+
+/* Smooth Following with 3D effect */
+.cursor-container .cursor {
+  transition: transform 0.1s ease-out;
+}
+
+.cursor-container .cursor-ring {
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+/* Button and Link Styles for Interactivity */
+button,
+a,
+.interactive {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.2s ease-out;
+}
+
+button:active .cursor,
+a:active .cursor {
+  background-color: #1eff00; /* Darker color when active */
+}
+
+button:focus .cursor,
+a:focus .cursor {
+  background-color: #ffca0b; /* Highlight on focus */
+}
+
+/* Adding subtle 3D scaling effect */
+button:hover,
+a:hover,
+.interactive:hover {
+  transform: scale(1.1);
+}
