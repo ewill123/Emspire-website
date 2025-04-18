@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -61,6 +61,8 @@ const navLinkStyles = () => ({
 
 const Navbar = ({ onGetStartedClick }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isNavVisible, setIsNavVisible] = useState(true); // State to control visibility
+  let lastScrollY = 0; // Keep track of last scroll position
 
   const toggleDrawer = () => setIsOpen(!isOpen);
   const closeDrawer = () => setIsOpen(false);
@@ -77,17 +79,36 @@ const Navbar = ({ onGetStartedClick }) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Scroll detection to hide navbar on scroll down and show on scroll up
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY) {
+        setIsNavVisible(false); // Scroll down
+      } else {
+        setIsNavVisible(true); // Scroll up
+      }
+      lastScrollY = window.scrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <Box
       as="nav"
       bg="#4D8B8C"
       w="100%"
-      p={4}
+      p={3} // Adjust padding for smaller height
       boxShadow="lg"
       position="fixed"
       top="0"
       zIndex="10"
       overflowX="hidden" // Prevent any horizontal overflow
+      style={{
+        transition: "transform 0.3s ease-in-out",
+        transform: isNavVisible ? "translateY(0)" : "translateY(-100%)", // Hide and show navbar
+      }}
     >
       <Flex
         align="center"
@@ -102,7 +123,7 @@ const Navbar = ({ onGetStartedClick }) => {
             src="/logo.png"
             alt="Emspire Logo"
             style={{
-              maxHeight: "50px",
+              maxHeight: "40px", // Reduced size for better alignment
               width: "auto",
               cursor: "pointer",
               animation: "breathing 3s ease-in-out infinite",
